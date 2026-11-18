@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/auth_providers.dart';
+import '../features/auth/presentation/register_page.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -34,6 +35,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: Routes.login,
         builder: (_, _) => const _PlaceholderPage('Login'),
       ),
+      GoRoute(path: Routes.register, builder: (_, _) => const RegisterPage()),
       GoRoute(
         path: Routes.home,
         builder: (_, _) => const _PlaceholderPage('Dashboard'),

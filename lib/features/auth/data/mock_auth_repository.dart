@@ -56,6 +56,40 @@ class MockAuthRepository implements AuthRepository {
   }
 
   @override
+  Future<AppUser> register(RegisterRequest request) async {
+    if (await findByEmail(request.email) != null) {
+      throw const AuthException('An account with this email already exists.');
+    }
+    final record = UserRecord(
+      AppUser(
+        id: 'u-${DateTime.now().microsecondsSinceEpoch}',
+        name: request.name.trim(),
+        email: request.email.trim().toLowerCase(),
+        role: request.role,
+        stateId: request.stateId,
+        courseId: request.courseId,
+        aiRank: request.aiRank,
+      ),
+      request.password,
+    );
+    (await users()).add(record);
+    await _persistRegistered();
+    return record.user;
+  }
+
+  /// Saves users that are not part of the seeded `users.json`.
+  Future<void> _persistRegistered() async {
+    final seededIds = (await _loader.loadList(
+      'users.json',
+    )).map((u) => u['id']).toSet();
+    final registered = (await users())
+        .where((u) => !seededIds.contains(u.user.id))
+        .map((u) => u.toJson())
+        .toList();
+    await (await _prefs).setString(registeredUsersKey, jsonEncode(registered));
+  }
+
+  @override
   Future<void> logout() async => (await _prefs).remove(sessionKey);
 }
 

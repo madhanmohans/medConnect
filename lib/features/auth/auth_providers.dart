@@ -20,6 +20,9 @@ class AuthController extends AsyncNotifier<AppUser?> {
   @override
   Future<AppUser?> build() => ref.watch(authRepositoryProvider).currentUser();
 
+  /// Creates an account; the user still has to log in afterwards.
+  Future<AppUser> register(RegisterRequest request) => _repo.register(request);
+
   Future<void> logout() async {
     await _repo.logout();
     state = const AsyncData(null);
