@@ -56,3 +56,13 @@ final searchResultsProvider =
       (ref, query) =>
           ref.watch(institutionRepositoryProvider).searchAllotments(query),
     );
+
+final institutionProvider = FutureProvider.family<Institution?, String>(
+  (ref, id) => ref.watch(institutionRepositoryProvider).institutionById(id),
+);
+
+final institutionAllotmentsProvider =
+    FutureProvider.family<List<AllotmentRow>, String>(
+      (ref, id) =>
+          ref.watch(institutionRepositoryProvider).allotmentsForInstitution(id),
+    );

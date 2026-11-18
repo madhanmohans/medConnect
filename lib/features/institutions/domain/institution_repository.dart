@@ -28,4 +28,7 @@ abstract class InstitutionRepository {
     SearchQuery query, {
     int pageSize = 20,
   });
+
+  /// All allotment records of one institution, ordered by course then round.
+  Future<List<AllotmentRow>> allotmentsForInstitution(String institutionId);
 }

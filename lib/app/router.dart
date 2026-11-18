@@ -9,6 +9,7 @@ import '../features/auth/presentation/otp_page.dart';
 import '../features/auth/presentation/register_page.dart';
 import '../features/institutions/domain/search_query.dart';
 import '../features/institutions/presentation/dashboard_page.dart';
+import '../features/institutions/presentation/institution_details_page.dart';
 import '../features/institutions/presentation/search_results_page.dart';
 
 abstract final class Routes {
@@ -61,7 +62,8 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         path: '/institutions/:id',
-        builder: (_, _) => const _PlaceholderPage('Institution'),
+        builder: (_, state) =>
+            InstitutionDetailsPage(institutionId: state.pathParameters['id']!),
       ),
     ],
   );
@@ -97,15 +99,4 @@ class _SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       const Scaffold(body: Center(child: CircularProgressIndicator()));
-}
-
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage(this.title);
-  final String title;
-
-  @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(title)),
-    body: const SizedBox.shrink(),
-  );
 }

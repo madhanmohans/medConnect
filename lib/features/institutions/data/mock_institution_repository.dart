@@ -123,4 +123,18 @@ class MockInstitutionRepository implements InstitutionRepository {
       pageSize: pageSize,
     );
   }
+
+  @override
+  Future<List<AllotmentRow>> allotmentsForInstitution(
+    String institutionId,
+  ) async =>
+      (await _allRows())
+          .where((r) => r.institution.id == institutionId)
+          .toList()
+        ..sort((x, y) {
+          final c = x.course.name.compareTo(y.course.name);
+          if (c != 0) return c;
+          final r = x.allotment.round.compareTo(y.allotment.round);
+          return r != 0 ? r : x.allotment.aiRank.compareTo(y.allotment.aiRank);
+        });
 }
