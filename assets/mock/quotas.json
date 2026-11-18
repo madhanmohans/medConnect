@@ -1,0 +1,22 @@
+[
+  {
+    "id": "aiq",
+    "name": "All India Quota"
+  },
+  {
+    "id": "state",
+    "name": "State Quota"
+  },
+  {
+    "id": "mgmt",
+    "name": "Management Quota"
+  },
+  {
+    "id": "deemed",
+    "name": "Deemed University"
+  },
+  {
+    "id": "central",
+    "name": "Central Institute"
+  }
+]

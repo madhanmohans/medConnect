@@ -1,0 +1,22 @@
+[
+  {
+    "id": "u-001",
+    "name": "Asha Student",
+    "email": "student@medconnect.dev",
+    "password": "password123",
+    "role": "student",
+    "stateId": "ka",
+    "courseId": "gm",
+    "aiRank": 5000
+  },
+  {
+    "id": "u-002",
+    "name": "Ravi Resident",
+    "email": "resident@medconnect.dev",
+    "password": "password123",
+    "role": "resident",
+    "stateId": "dl",
+    "courseId": "rd",
+    "aiRank": 1200
+  }
+]

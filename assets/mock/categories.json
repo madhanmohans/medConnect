@@ -1,0 +1,22 @@
+[
+  {
+    "id": "gen",
+    "name": "GEN"
+  },
+  {
+    "id": "ews",
+    "name": "EWS"
+  },
+  {
+    "id": "obc",
+    "name": "OBC"
+  },
+  {
+    "id": "sc",
+    "name": "SC"
+  },
+  {
+    "id": "st",
+    "name": "ST"
+  }
+]

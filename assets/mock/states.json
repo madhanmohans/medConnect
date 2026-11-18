@@ -1,0 +1,34 @@
+[
+  {
+    "id": "dl",
+    "name": "Delhi"
+  },
+  {
+    "id": "ka",
+    "name": "Karnataka"
+  },
+  {
+    "id": "kl",
+    "name": "Kerala"
+  },
+  {
+    "id": "tn",
+    "name": "Tamil Nadu"
+  },
+  {
+    "id": "ap",
+    "name": "Andhra Pradesh"
+  },
+  {
+    "id": "ts",
+    "name": "Telangana"
+  },
+  {
+    "id": "mh",
+    "name": "Maharashtra"
+  },
+  {
+    "id": "up",
+    "name": "Uttar Pradesh"
+  }
+]

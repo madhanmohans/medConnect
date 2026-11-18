@@ -1,0 +1,134 @@
+[
+  {
+    "id": "gm",
+    "name": "General Medicine",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "gs",
+    "name": "General Surgery",
+    "courseType": "Clinical",
+    "degree": "MS"
+  },
+  {
+    "id": "rd",
+    "name": "Radio Diagnosis",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "ped",
+    "name": "Paediatrics",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "obg",
+    "name": "Obstetrics & Gynaecology",
+    "courseType": "Clinical",
+    "degree": "MS"
+  },
+  {
+    "id": "ortho",
+    "name": "Orthopaedics",
+    "courseType": "Clinical",
+    "degree": "MS"
+  },
+  {
+    "id": "derm",
+    "name": "Dermatology",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "ent",
+    "name": "ENT",
+    "courseType": "Clinical",
+    "degree": "MS"
+  },
+  {
+    "id": "ophth",
+    "name": "Ophthalmology",
+    "courseType": "Clinical",
+    "degree": "MS"
+  },
+  {
+    "id": "anaes",
+    "name": "Anaesthesiology",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "psych",
+    "name": "Psychiatry",
+    "courseType": "Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "path",
+    "name": "Pathology",
+    "courseType": "Para-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "micro",
+    "name": "Microbiology",
+    "courseType": "Para-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "pharm",
+    "name": "Pharmacology",
+    "courseType": "Para-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "cm",
+    "name": "Community Medicine",
+    "courseType": "Para-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "fm",
+    "name": "Forensic Medicine",
+    "courseType": "Para-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "anat",
+    "name": "Anatomy",
+    "courseType": "Pre-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "phys",
+    "name": "Physiology",
+    "courseType": "Pre-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "bioc",
+    "name": "Biochemistry",
+    "courseType": "Pre-Clinical",
+    "degree": "MD"
+  },
+  {
+    "id": "dnb-gm",
+    "name": "General Medicine (DNB)",
+    "courseType": "Clinical",
+    "degree": "DNB"
+  },
+  {
+    "id": "dch",
+    "name": "Child Health (Diploma)",
+    "courseType": "Clinical",
+    "degree": "Diploma"
+  },
+  {
+    "id": "mph",
+    "name": "Public Health",
+    "courseType": "Non-Clinical",
+    "degree": "MPH"
+  }
+]
