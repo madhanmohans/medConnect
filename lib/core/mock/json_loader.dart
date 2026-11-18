@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+final jsonLoaderProvider = Provider<JsonLoader>((ref) => JsonLoader());
 
 /// Loads mock JSON files from `assets/mock/`. Each entity lives in its own
 /// file (e.g. `institutions.json`). Results are cached per file.

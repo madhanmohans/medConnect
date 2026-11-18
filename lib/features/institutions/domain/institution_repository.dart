@@ -13,4 +13,11 @@ abstract class InstitutionRepository {
   Future<List<Institution>> institutions({String? stateId});
 
   Future<Institution?> institutionById(String id);
+
+  /// Institutions in [stateId] that offer [courseId]. Falls back to all
+  /// institutions in the state when none offer the course.
+  Future<List<Institution>> recommended({
+    required String stateId,
+    required String courseId,
+  });
 }

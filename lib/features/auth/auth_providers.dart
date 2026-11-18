@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../institutions/institution_providers.dart';
+import '../../core/mock/json_loader.dart';
 import 'data/mock_auth_repository.dart';
 import 'domain/app_user.dart';
 import 'domain/auth_repository.dart';

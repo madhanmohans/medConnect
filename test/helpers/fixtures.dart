@@ -1,4 +1,6 @@
 import 'package:flutter_riverpod/misc.dart' show Override;
+import 'package:med_connect/features/auth/auth_providers.dart';
+import 'package:med_connect/features/auth/domain/app_user.dart';
 import 'package:med_connect/features/institutions/domain/models.dart';
 import 'package:med_connect/features/institutions/institution_providers.dart';
 
@@ -32,3 +34,24 @@ List<Override> lookupOverrides() => [
     (ref) async => const [Lookup(id: 'gen', name: 'GEN')],
   ),
 ];
+
+const testUser = AppUser(
+  id: 'u-test',
+  name: 'Asha Student',
+  email: 'asha@example.com',
+  role: UserRole.student,
+  stateId: 'ka',
+  courseId: 'gm',
+  aiRank: 5000,
+);
+
+class FakeAuthController extends AuthController {
+  FakeAuthController(this.user);
+  final AppUser? user;
+
+  @override
+  Future<AppUser?> build() async => user;
+}
+
+Override signedInAs(AppUser user) =>
+    authControllerProvider.overrideWith(() => FakeAuthController(user));

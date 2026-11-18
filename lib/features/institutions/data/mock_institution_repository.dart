@@ -44,4 +44,14 @@ class MockInstitutionRepository implements InstitutionRepository {
     }
     return null;
   }
+
+  @override
+  Future<List<Institution>> recommended({
+    required String stateId,
+    required String courseId,
+  }) async {
+    final inState = await institutions(stateId: stateId);
+    final matching = inState.where((i) => i.courseIds.contains(courseId));
+    return matching.isNotEmpty ? matching.toList() : inState;
+  }
 }
