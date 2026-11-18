@@ -1,0 +1,32 @@
+services:
+  # Development: source is bind-mounted; press `r` / `R` in the attached
+  # terminal (docker compose run) for hot reload / restart.
+  dev:
+    build:
+      context: .
+      target: dev
+    image: med_connect:dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+      - dart_tool:/app/.dart_tool
+      - build:/app/build
+      - pub_cache:/root/.pub-cache
+    stdin_open: true
+    tty: true
+
+  # Production: release web build served by nginx
+  web:
+    build:
+      context: .
+      target: prod
+    image: med_connect:latest
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+
+volumes:
+  dart_tool:
+  build:
+  pub_cache:
