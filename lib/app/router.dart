@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../features/auth/auth_providers.dart';
+import '../features/auth/presentation/forgot_password_page.dart';
+import '../features/auth/presentation/login_page.dart';
+import '../features/auth/presentation/otp_page.dart';
 import '../features/auth/presentation/register_page.dart';
 
 abstract final class Routes {
@@ -31,9 +34,19 @@ final routerProvider = Provider<GoRouter>((ref) {
         authRedirect(ref.read(authControllerProvider), state.uri),
     routes: [
       GoRoute(path: Routes.splash, builder: (_, _) => const _SplashPage()),
+      GoRoute(path: Routes.login, builder: (_, _) => const LoginPage()),
       GoRoute(
-        path: Routes.login,
-        builder: (_, _) => const _PlaceholderPage('Login'),
+        path: Routes.otp,
+        redirect: (_, state) =>
+            state.uri.queryParameters['email'] == null ? Routes.login : null,
+        builder: (_, state) =>
+            OtpPage(email: state.uri.queryParameters['email']!),
+      ),
+      GoRoute(
+        path: Routes.forgotPassword,
+        builder: (_, state) => ForgotPasswordPage(
+          initialEmail: state.uri.queryParameters['email'],
+        ),
       ),
       GoRoute(path: Routes.register, builder: (_, _) => const RegisterPage()),
       GoRoute(

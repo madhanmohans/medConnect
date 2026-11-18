@@ -15,8 +15,13 @@ class MockAuthRepository implements AuthRepository {
   static const sessionKey = 'session_user_id';
   static const registeredUsersKey = 'registered_users';
 
+  static const otpValidity = Duration(minutes: 10);
+
   final JsonLoader _loader;
   List<UserRecord>? _users;
+
+  /// Pending one-time codes by email, with their expiry.
+  final _otps = <String, ({String code, DateTime expiresAt})>{};
 
   Future<SharedPreferences> get _prefs => SharedPreferences.getInstance();
 
@@ -28,10 +33,15 @@ class MockAuthRepository implements AuthRepository {
     final stored = (await _prefs).getString(registeredUsersKey);
     final registered = stored == null
         ? const <UserRecord>[]
-        : (jsonDecode(stored) as List).cast<Map<String, dynamic>>().map(
-            UserRecord.fromJson,
-          );
-    return _users = [...seeded, ...registered];
+        : (jsonDecode(stored) as List)
+              .cast<Map<String, dynamic>>()
+              .map(UserRecord.fromJson)
+              .toList();
+    final storedIds = registered.map((u) => u.user.id).toSet();
+    return _users = [
+      ...seeded.where((u) => !storedIds.contains(u.user.id)),
+      ...registered,
+    ];
   }
 
   Future<UserRecord?> findByEmail(String email) async {
@@ -77,16 +87,86 @@ class MockAuthRepository implements AuthRepository {
     return record.user;
   }
 
-  /// Saves users that are not part of the seeded `users.json`.
+  /// Saves users that differ from the seeded `users.json` (newly registered
+  /// users, and seeded users whose password was reset).
   Future<void> _persistRegistered() async {
-    final seededIds = (await _loader.loadList(
-      'users.json',
-    )).map((u) => u['id']).toSet();
+    final seeded = {
+      for (final u in await _loader.loadList('users.json'))
+        u['id']: u['password'],
+    };
     final registered = (await users())
-        .where((u) => !seededIds.contains(u.user.id))
+        .where(
+          (u) =>
+              !seeded.containsKey(u.user.id) || seeded[u.user.id] != u.password,
+        )
         .map((u) => u.toJson())
         .toList();
     await (await _prefs).setString(registeredUsersKey, jsonEncode(registered));
+  }
+
+  @override
+  Future<AppUser> login(String email, String password) async {
+    final record = await findByEmail(email);
+    if (record == null || record.password != password) {
+      throw const AuthException('Incorrect email or password.');
+    }
+    await startSession(record.user);
+    return record.user;
+  }
+
+  @override
+  Future<void> sendOtp(String email) async {
+    final record = await findByEmail(email);
+    if (record == null) {
+      throw const AuthException('No account found for this email.');
+    }
+    // A real backend would email a random code; the mock uses otp.json.
+    final code = (await _loader.loadMap('otp.json'))['mockOtp'] as String;
+    _otps[record.user.email] = (
+      code: code,
+      expiresAt: DateTime.now().add(otpValidity),
+    );
+  }
+
+  @override
+  Future<void> verifyOtp(String email, String otp) async {
+    await _checkOtp(email, otp);
+  }
+
+  @override
+  Future<AppUser> loginWithOtp(String email, String otp) async {
+    final record = await _checkOtp(email, otp);
+    _otps.remove(record.user.email);
+    await startSession(record.user);
+    return record.user;
+  }
+
+  @override
+  Future<void> resetPassword(
+    String email,
+    String otp,
+    String newPassword,
+  ) async {
+    final record = await _checkOtp(email, otp);
+    _otps.remove(record.user.email);
+    record.password = newPassword;
+    await _persistRegistered();
+  }
+
+  Future<UserRecord> _checkOtp(String email, String otp) async {
+    final record = await findByEmail(email);
+    final pending = record == null ? null : _otps[record.user.email];
+    if (record == null || pending == null) {
+      throw const AuthException('Request a new code first.');
+    }
+    if (DateTime.now().isAfter(pending.expiresAt)) {
+      _otps.remove(record.user.email);
+      throw const AuthException('This code has expired. Request a new one.');
+    }
+    if (pending.code != otp.trim()) {
+      throw const AuthException('Incorrect code.');
+    }
+    return record;
   }
 
   @override
