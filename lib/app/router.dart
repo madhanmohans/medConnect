@@ -7,7 +7,9 @@ import '../features/auth/presentation/forgot_password_page.dart';
 import '../features/auth/presentation/login_page.dart';
 import '../features/auth/presentation/otp_page.dart';
 import '../features/auth/presentation/register_page.dart';
+import '../features/institutions/domain/search_query.dart';
 import '../features/institutions/presentation/dashboard_page.dart';
+import '../features/institutions/presentation/search_results_page.dart';
 
 abstract final class Routes {
   static const splash = '/splash';
@@ -53,7 +55,9 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: Routes.home, builder: (_, _) => const DashboardPage()),
       GoRoute(
         path: Routes.search,
-        builder: (_, _) => const _PlaceholderPage('Search results'),
+        builder: (_, state) => SearchResultsPage(
+          query: SearchQuery.fromQueryParameters(state.uri.queryParameters),
+        ),
       ),
       GoRoute(
         path: '/institutions/:id',

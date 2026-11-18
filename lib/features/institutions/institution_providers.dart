@@ -5,6 +5,7 @@ import '../auth/auth_providers.dart';
 import 'data/mock_institution_repository.dart';
 import 'domain/institution_repository.dart';
 import 'domain/models.dart';
+import 'domain/search_query.dart';
 
 final institutionRepositoryProvider = Provider<InstitutionRepository>(
   (ref) => MockInstitutionRepository(ref.watch(jsonLoaderProvider)),
@@ -48,3 +49,10 @@ final recommendedInstitutionsProvider = FutureProvider<List<Institution>>((
       .watch(institutionRepositoryProvider)
       .recommended(stateId: user.stateId, courseId: user.courseId);
 });
+
+/// One page of search results for a query (the query includes the page).
+final searchResultsProvider =
+    FutureProvider.family<PagedResult<AllotmentRow>, SearchQuery>(
+      (ref, query) =>
+          ref.watch(institutionRepositoryProvider).searchAllotments(query),
+    );

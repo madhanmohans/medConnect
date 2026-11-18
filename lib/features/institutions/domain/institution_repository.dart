@@ -1,4 +1,5 @@
 import 'models.dart';
+import 'search_query.dart';
 
 /// Read access to institutions and the lookup lists used by filters.
 /// The mock implementation reads `assets/mock/*.json`; a real API client can
@@ -19,5 +20,12 @@ abstract class InstitutionRepository {
   Future<List<Institution>> recommended({
     required String stateId,
     required String courseId,
+  });
+
+  /// Allotment records the student could get: closing AI rank ≥ [SearchQuery.rank],
+  /// narrowed by the optional filters, sorted and paginated.
+  Future<PagedResult<AllotmentRow>> searchAllotments(
+    SearchQuery query, {
+    int pageSize = 20,
   });
 }
